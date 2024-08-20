@@ -15,8 +15,6 @@
 **/jsonReports/
 **/reports/
 **/playwright/.cache/
-**/env/
-**/.env
 **/auth/
 allure-report/
 allure-results/
