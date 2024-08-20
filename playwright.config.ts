@@ -91,7 +91,7 @@ export default defineConfig({
 		},
 
 		{
-			name: 'firefox',
+			name: 'Desktop_Firefox',
 			use: {
 				browserName: 'firefox',
 				viewport: { width: 1920, height: 1080 },
@@ -103,7 +103,7 @@ export default defineConfig({
 		},
 
 		{
-			name: 'webkit',
+			name: 'Desktop_Safari',
 			use: {
 				browserName: 'webkit',
 				viewport: { width: 1920, height: 1080 },
@@ -115,19 +115,19 @@ export default defineConfig({
 		},
 
 		/* Test against mobile viewports. */
-		{
-			name: 'Mobile_Chrome',
-			use: { ...devices['Pixel 5'] },
-		},
-		{
-			name: 'Tablet_Safari',
-			use: {
-				...devices['iPad (gen 5) landscape'],
-				launchOptions: {
-					slowMo: 0,
-				},
-			},
-		},
+		// {
+		// 	name: 'Mobile_Chrome',
+		// 	use: { ...devices['Pixel 5'] },
+		// },
+		// {
+		// 	name: 'Tablet_Safari',
+		// 	use: {
+		// 		...devices['iPad (gen 5) landscape'],
+		// 		launchOptions: {
+		// 			slowMo: 0,
+		// 		},
+		// 	},
+		// },
 	],
 
 	/* Run your local dev server before starting the tests */
