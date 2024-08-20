@@ -64,13 +64,15 @@ export class RegistrationForm {
 		password: string,
 		passwordConfirm: string,
 		email: string,
-		fullName: string
+		fullName: string,
+		timeZone: string
 	): Promise<void> {
 		await this.fillUserName(userName);
 		await this.fillPassword(password);
 		await this.fillPasswordConfirm(passwordConfirm);
 		await this.fillEmail(email);
 		await this.fillFullName(fullName);
+		await this.selectTimeZone(timeZone);
 	}
 
 	async submitRegistrationForm(): Promise<void> {

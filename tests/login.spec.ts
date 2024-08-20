@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test } from '@playwright/test';
 import { HomePage } from '../src/poms/homePage';
 import { CookieBar } from '../src/poms/cookieBarPage';
 import { MainMenuDesktop } from '../src/poms/mainMenuDesktopPage';
@@ -45,9 +45,9 @@ test('Login with email contains public domain @Login @Negative', async ({ page }
 		testData[0].userPassword,
 		testData[0].userPassword,
 		testData[0].userEmail,
-		testData[0].userFulllName
+		testData[0].userFulllName,
+		testData[0].timeZone
 	);
-	await registrationForm.selectTimeZone(testData[0].timeZone);
 	await registrationForm.submitRegistrationForm();
 
 	const registrationError = new RegistrationErrorPage(page);
