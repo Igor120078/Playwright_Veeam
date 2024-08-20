@@ -1,4 +1,3 @@
-/* eslint-disable import/order */
 import { Locator, Page, expect } from '@playwright/test';
 
 export class CookieBar {

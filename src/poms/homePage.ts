@@ -1,6 +1,4 @@
-/* eslint-disable import/order */
 import { Locator, Page, expect } from '@playwright/test';
-import { MainMenuDesktop } from './mainMenuDesktopPage';
 
 export class HomePage {
 	private page: Page;
@@ -32,13 +30,4 @@ export class HomePage {
 		await expect(this.buyOnline).toBeVisible();
 		await expect(this.logIn).toBeVisible();
 	}
-
-	// async selectMainMenuPOM(): Promise<MainMenu> {
-	// 	const projectName = test.info().project.name;
-	// 	if (projectName === 'Tablet_Safari') {
-	// 		return new MainMenuTablet(this.page);
-	// 	} else {
-	// 		return new MainMenuDesktop(this.page);
-	// 	}
-	// }
 }
