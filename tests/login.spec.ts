@@ -1,17 +1,26 @@
 import { test, expect } from '@playwright/test';
 import { HomePage } from '../src/poms/homePage';
+import { CookieBar } from '../src/poms/cookieBarPage';
 import { MainMenuDesktop } from '../src/poms/mainMenuDesktopPage';
 import { MainMenuResources } from '../src/poms/mainMenuResourcesPage';
 import { RdForums } from '../src/poms/rdForumsPage';
+import { RegistrationTerms } from '../src/poms/registrationTermsPage';
+import { RegistrationForm } from '../src/poms/registrationFormPage';
+import { RegistrationErrorPage } from '../src/poms/registrationErrorPage';
+import testData from '../src/test_data/registrationData.json';
 
 test.afterEach('Close the page', async ({ context }) => {
 	await context.close();
 });
 
-test('Login with email contains public domain @Login @Negative', async ({ page }, testInfo) => {
+test('Login with email contains public domain @Login @Negative', async ({ page }) => {
 	const homePage = new HomePage(page);
 	await homePage.navigate();
 	await homePage.validateAllComponents();
+
+	const cookieBar = new CookieBar(page);
+	await cookieBar.validateAllComponents();
+	await cookieBar.acceptCookies();
 
 	const mainMenu = new MainMenuDesktop(page);
 	await mainMenu.validateAllComponents();
@@ -23,32 +32,25 @@ test('Login with email contains public domain @Login @Negative', async ({ page }
 
 	const rdForums = new RdForums(page);
 	await rdForums.validateAllComponents();
+	await rdForums.registerClick();
 
-	await page.waitForTimeout(1000);
+	const registrationTerms = new RegistrationTerms(page);
+	await registrationTerms.validateAllComponents();
+	await registrationTerms.agreeWithTerms();
 
-	// const loginPage = new LoginPage(page);
+	const registrationForm = new RegistrationForm(page);
+	await registrationForm.validateAllComponents();
+	await registrationForm.fillRegistrationForm(
+		testData[0].userName,
+		testData[0].userPassword,
+		testData[0].userPassword,
+		testData[0].userEmail,
+		testData[0].userFulllName
+	);
+	await registrationForm.selectTimeZone(testData[0].timeZone);
+	await registrationForm.submitRegistrationForm();
 
-	// let errors: Array<Error> = [];
-	// page.addListener('console', (msg) => {
-	// 	if (msg.type() === 'error') {
-	// 		errors.push(new Error(msg.text()));
-	// 	}
-	// });
-
-	// await loginPage.validateAllComponents();
-	// await loginPage.login();
-
-	// const downloadSalesforce = homePage.getDownloadSalesforce();
-	// const projectName = testInfo.project.name;
-	// if (projectName === 'Tablet_Safari') {
-	// 	await expect(downloadSalesforce).toHaveScreenshot('downloadSalesforceTablet.png');
-	// } else {
-	// 	await expect(downloadSalesforce).toHaveScreenshot('downloadSalesforce.png');
-	// }
-
-	// if (errors.length > 0) {
-	// 	console.log('Console errors found:', errors);
-	// } else {
-	// 	console.log('No Console errors found');
-	// }
+	const registrationError = new RegistrationErrorPage(page);
+	await registrationError.validateAllComponents();
+	await registrationError.validateErrorMessageText();
 });

@@ -1,6 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
 import * as dotenv from 'dotenv';
-// import { devices } from '@playwright/test';
 
 dotenv.config({ path: './env/.env' });
 dotenv.config({ path: './env/' + process.env.TEST_ENVIRONMENT + '/.env' });
@@ -29,7 +28,7 @@ export default defineConfig({
 		},
 	},
 	/* Run tests in files in parallel */
-	fullyParallel: false,
+	fullyParallel: true,
 	/* Fail the build on CI if you accidentally left test.only in the source code. */
 	forbidOnly: !!process.env.CI,
 	/* Retry on CI only */
@@ -61,10 +60,6 @@ export default defineConfig({
 		video: 'retain-on-failure',
 		launchOptions: {
 			args: ['--start-maximized'],
-			// logger: {
-			//   isEnabled: (name, severity) => true,
-			//   log: (name, severity, message, args) => console.log(name, severity)
-			// },
 			slowMo: 0,
 		},
 	},
@@ -75,7 +70,7 @@ export default defineConfig({
 			name: 'Desktop_Chrome',
 			use: {
 				browserName: 'chromium',
-				viewport: { width: 2500, height: 1200 },
+				viewport: { width: 1920, height: 1080 },
 				launchOptions: {
 					// args: ['--start-maximized'],
 					slowMo: 0,
@@ -87,7 +82,7 @@ export default defineConfig({
 			name: 'Desktop_Edge',
 			use: {
 				channel: 'msedge',
-				viewport: { width: 2500, height: 1200 },
+				viewport: { width: 1920, height: 1080 },
 				launchOptions: {
 					// args: ['--start-maximized'],
 					slowMo: 0,
@@ -99,9 +94,9 @@ export default defineConfig({
 			name: 'firefox',
 			use: {
 				browserName: 'firefox',
-				viewport: null,
+				viewport: { width: 1920, height: 1080 },
 				launchOptions: {
-					args: ['--start-maximized'],
+					// args: ['--start-maximized'],
 					slowMo: 0,
 				},
 			},
@@ -111,9 +106,9 @@ export default defineConfig({
 			name: 'webkit',
 			use: {
 				browserName: 'webkit',
-				viewport: null,
+				viewport: { width: 1920, height: 1080 },
 				launchOptions: {
-					args: ['--start-maximized'],
+					// args: ['--start-maximized'],
 					slowMo: 0,
 				},
 			},
