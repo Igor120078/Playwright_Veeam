@@ -27,8 +27,8 @@ export class MainMenuResources {
 		await expect(this.downloads).toBeVisible();
 		await expect(this.renewalCenter).toBeVisible();
 		await expect(this.supportResources).toBeVisible();
-		expect(this.community).toBeVisible();
-		expect(this.rdForums).toBeVisible();
+		await expect(this.community).toBeVisible();
+		await expect(this.rdForums).toBeVisible();
 	}
 
 	async rdForumsClick(): Promise<void> {
