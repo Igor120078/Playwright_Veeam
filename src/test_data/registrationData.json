@@ -1,9 +1,9 @@
 [
-	{
-		"userName": "InterviewUser",
-		"userPassword": "InreviewUser",
-		"userEmail": "inreviewuser@gmail.com",
-		"userFulllName": "Test Testovich",
-		"timeZone": "Europe/Prague"
-	}
+  {
+    "userName": "InterviewUser",
+    "userPassword": "InterviewUser",
+    "userEmail": "interviewuser@gmail.com",
+    "userFulllName": "Test Testovich",
+    "timeZone": "Europe/Prague"
+  }
 ]
