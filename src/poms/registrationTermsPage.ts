@@ -10,7 +10,7 @@ export class RegistrationTerms {
   constructor(page: Page) {
     this.page = page;
     this.rdForumsRegistrationTitle = page.locator(
-      "//h2[normalize-space(text())='R&D Forums - Registration']"
+      "//h2[normalize-space(text())='R&D Forums - Registration']",
     );
     this.mainPageNavigator = page.locator("span[itemprop='name']");
     this.agreeTermsBtn = page.locator("input[name='agreed']");
@@ -25,7 +25,6 @@ export class RegistrationTerms {
   }
 
   async agreeWithTerms(): Promise<void> {
-    await this.page.waitForTimeout(1000);
     await this.agreeTermsBtn.click();
   }
 }

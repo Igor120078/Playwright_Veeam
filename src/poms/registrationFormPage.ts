@@ -14,7 +14,7 @@ export class RegistrationForm {
   constructor(page: Page) {
     this.page = page;
     this.registrationFormTitle = page.locator(
-      "//h2[normalize-space(text())='R&D Forums - Registration']"
+      "//h2[normalize-space(text())='R&D Forums - Registration']",
     );
     this.userNameInput = page.locator("#username");
     this.passwordInput = page.locator("#new_password");
@@ -53,14 +53,6 @@ export class RegistrationForm {
   }
 
   async selectTimeZone(timeZone: string): Promise<void> {
-    // await this.timeZoneSelector.click();
-    // await this.page.waitForTimeout(300);
-
-    // // Scroll the option into view
-    // const targetOption = this.page.locator(
-    //   `#timezone option[value="${timeZone}"]`
-    // );
-    // await targetOption.scrollIntoViewIfNeeded();
     await this.timeZoneSelector.selectOption(timeZone);
   }
 
@@ -74,7 +66,7 @@ export class RegistrationForm {
     passwordConfirm: string,
     email: string,
     fullName: string,
-    timeZone: string
+    timeZone: string,
   ): Promise<void> {
     await this.fillUserName(userName);
     await this.fillPassword(password);
