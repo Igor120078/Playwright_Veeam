@@ -1,0 +1,93 @@
+name: Playwright Tests - Same Repo
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to test'
+        required: true
+        default: 'dev'
+        type: choice
+        options:
+          - dev
+          - staging
+          - prod
+
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        browser: [chromium, firefox, webkit]
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps ${{ matrix.browser }}
+
+    - name: Run Playwright tests
+      env:
+        # Environment variables
+        BASE_URL: ${{ secrets.BASE_URL }}
+        TEST_USERNAME: ${{ secrets.TEST_USERNAME }}
+        TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
+        API_KEY: ${{ secrets.API_KEY }}
+        ENVIRONMENT: ${{ github.event.inputs.environment || 'dev' }}
+        # Additional env variables
+        CI: true
+        PLAYWRIGHT_BROWSER: ${{ matrix.browser }}
+      run: npx playwright test --project=${{ matrix.browser }}
+
+    - name: Upload Playwright Report
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: playwright-report-${{ matrix.browser }}
+        path: playwright-report/
+        retention-days: 30
+
+    - name: Upload Test Results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: test-results-${{ matrix.browser }}
+        path: test-results/
+        retention-days: 30
+
+    - name: Upload Traces
+      uses: actions/upload-artifact@v4
+      if: failure()
+      with:
+        name: traces-${{ matrix.browser }}
+        path: playwright-report/trace/
+        retention-days: 30
+
+  notify:
+    needs: test
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+    - name: Send notification
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        STATUS: ${{ needs.test.result }}
+      run: |
+        if [ -n "$SLACK_WEBHOOK" ]; then
+          curl -X POST $SLACK_WEBHOOK -H 'Content-Type: application/json' \
+          -d "{\"text\":\"Playwright tests completed with status: $STATUS\"}"
+        fi
