@@ -1,9 +1,9 @@
 name: Playwright Tests - Same Repo
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ main, kb-laptop ]
   pull_request:
-    branches: [ main, develop ]
+    branches: [ main, kb-laptop ]
   workflow_dispatch:
     inputs:
       environment:
