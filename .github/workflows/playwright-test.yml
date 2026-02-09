@@ -1,9 +1,9 @@
 name: Playwright Tests - Same Repo
 on:
-  push:
-    branches: [ main, kb-laptop ]
-  pull_request:
-    branches: [ main, kb-laptop ]
+  # push:
+  #   branches: [ main, kb-laptop ]
+  # pull_request:
+  #   branches: [ main, kb-laptop ]
   workflow_dispatch:
     inputs:
       environment:
@@ -46,7 +46,7 @@ jobs:
         # Additional env variables
         CI: true
         HEADLESS: true
-      run: npx playwright test ---project=Desktop_Chrome
+      run: npx playwright test --project=Desktop_Chrome
 
     - name: Upload Playwright Report
       uses: actions/upload-artifact@v4
