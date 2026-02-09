@@ -1,9 +1,9 @@
 name: Playwright Tests - Same Repo
 on:
-  push:
-    branches: [ main, develop ]
-  pull_request:
-    branches: [ main, develop ]
+  # push:
+  #   branches: [ main, develop ]
+  # pull_request:
+  #   branches: [ main, develop ]
   workflow_dispatch:
     inputs:
       environment:
@@ -51,6 +51,7 @@ jobs:
         # Additional env variables
         CI: true
         PLAYWRIGHT_BROWSER: ${{ matrix.browser }}
+        HEADLESS: true
       run: npx playwright test --project=${{ matrix.browser }}
 
     - name: Upload Playwright Report
